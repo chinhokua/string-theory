@@ -33,7 +33,7 @@ def RungeKuttaCoupled(x, y, z, dx, dydx, dzdx):
 
 
 # INITIAL VALUES
-t0 = 0     # initial value of primary independent variable
+x0 = 0     # initial value of primary independent variable
 y0 = 0     # where y(x0) = y0
 z0 = 0     # where z(x0) = z0
 dx = 0.1   # step size
@@ -42,18 +42,18 @@ x_end = 30 # final accepted value for x before calculation terminates
 
 # initializing initial variables, and building the array to place calculated values of every iteration of RK4 of both equations
 x = x0
-y = v0 
+y = y0 
 z = z0
-x_values = [t0]
-y_values = [v0]
+x_values = [x0]
+y_values = [y0]
 z_values = [x0] 
 
 while x <= x_end: # while we haven't reached intended final calculation area (x)
     
     # perform one iteration of the RK4
-    t, v, x = RungeKuttaCoupled(x, y, z, dx, dydx, dzdx)
+    t, y, x = RungeKuttaCoupled(x, y, z, dx, dydx, dzdx)
     
     #append outputted values into the value lists so they can be plotted by matplotlib later
     x_values.append(t)
-    y_values.append(v)
+    y_values.append(y)
     z_values.append(x)
