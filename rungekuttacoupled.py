@@ -1,3 +1,7 @@
+# Chin Ho Kua, NYIT 1267789, Runge-Kutta method (4th order) implementation
+# -------------------------------------------------------------------
+# Python program to implement Runge Kutta method for coupled equations
+
 def dydx(x, y, z): # dy/dx, where y and z are functions of x
     return x
 
