@@ -51,9 +51,9 @@ z_values = [x0]
 while x <= x_end: # while we haven't reached intended final calculation area (x)
     
     # perform one iteration of the RK4
-    t, y, x = RungeKuttaCoupled(x, y, z, dx, dydx, dzdx)
+    x, y, x = RungeKuttaCoupled(x, y, z, dx, dydx, dzdx)
     
     #append outputted values into the value lists so they can be plotted by matplotlib later
-    x_values.append(t)
+    x_values.append(x)
     y_values.append(y)
     z_values.append(x)
