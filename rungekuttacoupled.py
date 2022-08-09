@@ -8,6 +8,13 @@ def dydx(x, y, z): # dy/dx, where y and z are functions of x
 def dzdx(x, y, z): # dz/dx, where y and z are functions of x
     return x
 
+# INITIAL VALUES
+x0 = 0     # initial value of primary independent variable
+y0 = 0     # where y(x0) = y0
+z0 = 0     # where z(x0) = z0
+dx = 0.1   # step size
+x_end = 30 # final accepted value for x before calculation terminates
+
 def RungeKuttaCoupled(x, y, z, dx, dydx, dzdx):
     
     # calculating RK4 variables as before, but this time alternating between the two equations
@@ -27,17 +34,12 @@ def RungeKuttaCoupled(x, y, z, dx, dydx, dzdx):
     x = x + dx
     
 
-    return x, y, z #outputted so they can be appended as values to a table (as well as update the x value)
+    return x, y, z # outputted so they can be appended as values to a table (as well as update the x value)
 
 
 
 
-# INITIAL VALUES
-x0 = 0     # initial value of primary independent variable
-y0 = 0     # where y(x0) = y0
-z0 = 0     # where z(x0) = z0
-dx = 0.1   # step size
-x_end = 30 # final accepted value for x before calculation terminates
+
 
 
 # initializing initial variables, and building the array to place calculated values of every iteration of RK4 of both equations

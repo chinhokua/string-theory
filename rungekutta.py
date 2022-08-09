@@ -31,9 +31,9 @@ def rungeKutta(f, x0, y0, x, h):
 # Driver method
 f = lambda x, y: (x-y)/2 # insert DERIVATIVE function here (this equals f = dy/dx = (x-y/2) at present)
 x0 = 0 # boundary x-value
-y = 1  # boundary y-value
-x = 2  # instruct program to find y at this x-value using Runge Kutta 
-h = 0.2 # step size - NOTE: If [(x-x0) mod h != 0] then the terms summed will be mildly skewed 
+y =  1  # boundary y-value
+x =  2  # instruct program to find y at this x-value using Runge Kutta 
+h =  0.2 # step size - NOTE: If [(x-x0) mod h != 0] then the terms summed will be mildly skewed 
 print ('The value of y at x is:', rungeKutta(f, x0, y, x, h))
 
 # TODO: understand coupled runge-kutta methods 
