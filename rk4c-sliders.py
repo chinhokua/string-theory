@@ -24,14 +24,14 @@ y_values = [y0]
 z_values = [x0] 
 
 # derivative functions definition
-def dydx(x, y, z): # dy/dx, where y and z are functions of x
+def dydx(x, y, z, factor): # dy/dx, where y and z are functions of x
     return x + math.pow(0.01, y)*y
 
-def dzdx(x, y, z): # dz/dx, where y and z are functions of x
+def dzdx(x, y, z, factor): # dz/dx, where y and z are functions of x
     return 47 - x + (math.pow(0.02, z)*z)
 
 # main RK4 functiom
-def RungeKuttaCoupled(x, y, z, dx, dydx, dzdx):
+def RungeKuttaCoupled(x, y, z, dx, dydx, dzdx, factor):
     
     # calculating RK4 variables as before, but this time alternating between the two equations
     # k values are for RK4 of dydx, and m values are for RK4 of dzdx
@@ -53,22 +53,54 @@ def RungeKuttaCoupled(x, y, z, dx, dydx, dzdx):
 while x <= x_end: # while we haven't reached intended final calculation area (x)
     
     # perform one iteration of the RK4
-    x, y, z = RungeKuttaCoupled(x, y, z, dx, dydx, dzdx)
+    x, y, z = RungeKuttaCoupled(x, y, z, dx, dydx, dzdx, factor)
     
     #append outputted values into the value lists so they can be plotted by matplotlib later
     x_values.append(x)
     y_values.append(y)
     z_values.append(z)
 
-# Plotting the graphs 
+fig, ax = plt.subplots()
+line, = ax.plot(x_values, y_values, 'b')
+line2, = ax.plot(x_values, z_values, 'g')
+plt.title("RK4 of dy/dx and dz/dx")
+ax.legend(["dy/dx", "dz/dx"])
+
+# adjust the main plot to make room for the sliders
+fig.subplots_adjust(left=0.25)
+
+# display settings 
 plt.autoscale(enable=True, axis='y', tight=None) # forces a y-axis autofit 
-manager = plt.get_current_fig_manager() # gets window manager of graph
-manager.resize(*manager.window.maxsize()) # forces graph to max size of screen
-plt.plot(x_values, y_values, 'bo') 
-plt.plot(x_values, z_values,'ro')
-plt.legend(['RK4 dy/dx','dz/dx'])
 plt.grid(True)
-plt.title("Solution")
+
+# Make a vertically oriented slider to control the amplitude
+axamp = fig.add_axes([0.1, 0.25, 0.0225, 0.63])
+ab_slider = Slider(
+    ax=axamp,
+    label="A/B",
+    valmin=0,
+    valmax=30,
+    valinit=1,
+    orientation="vertical"
+)
+
+def update(val):
+    while x <= x_end: # while we haven't reached intended final calculation area (x)
+        # perform one iteration of the RK4
+        x, y, z = RungeKuttaCoupled(x, y, z, dx, dydx, dzdx, factor)
+        
+        #append outputted values into the value lists so they can be plotted by matplotlib later
+        x_values.append(x)
+        y_values.append(y)
+        z_values.append(z)
+        fig.canvas.draw_idle()
+
+# making a reset button to reset the sliders
+resetax = fig.add_axes([0.8, 0.025, 0.1, 0.04])
+button = Button(resetax, 'Reset', hovercolor='0.975')
+def reset(event):
+    ab_slider.reset()
+button.on_clicked(reset)
 plt.show()
 
 # NOT FUNCTIONAL YET
