@@ -62,8 +62,6 @@ while x <= x_end: # while we haven't reached intended final calculation area (x)
 
 # Plotting the graphs 
 plt.autoscale(enable=True, axis='y', tight=None) # forces a y-axis autofit 
-manager = plt.get_current_fig_manager() # gets window manager of graph
-manager.resize(*manager.window.maxsize()) # forces graph to max size of screen
 plt.plot(x_values, y_values, 'bo') 
 plt.plot(x_values, z_values,'ro')
 plt.legend(['RK4 dy/dx','dz/dx'])
