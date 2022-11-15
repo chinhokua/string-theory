@@ -28,21 +28,21 @@ def dydx(x, y, z, factor): # dy/dx, where y and z are functions of x
     return x + math.pow(0.01, y)*y
 
 def dzdx(x, y, z, factor): # dz/dx, where y and z are functions of x
-    return 47 - x + (math.pow(0.02, z)*z)
+    return 47 - x + (math.pow(0.02, z)*dydx(x, y, z, factor))
 
 # main RK4 functiom
 def RungeKuttaCoupled(x, y, z, dx, dydx, dzdx, factor):
     
     # calculating RK4 variables as before, but this time alternating between the two equations
     # k values are for RK4 of dydx, and m values are for RK4 of dzdx
-    k1 = dx * dydx(x, y, z) 
-    m1 = dx * dzdx(x, y, z)
-    k2 = dx * dydx(x + dx/2., y + k1/2., z + m1/2.)
-    m2 = dx * dzdx(x + dx/2., y + k1/2., z + m1/2.)
-    k3 = dx * dydx(x + dx/2., y + k2/2., z + m2/2.)
-    m3 = dx * dzdx(x + dx/2., y + k2/2., z + m2/2.)
-    k4 = dx * dydx(x + dx, y + k3, z + m3)
-    m4 = dx * dzdx(x + dx, y + k3, z + m3)
+    k1 = dx * dydx(x, y, z, factor) 
+    m1 = dx * dzdx(x, y, z, factor)
+    k2 = dx * dydx(x + dx/2., y + k1/2., z + m1/2., factor)
+    m2 = dx * dzdx(x + dx/2., y + k1/2., z + m1/2., factor)
+    k3 = dx * dydx(x + dx/2., y + k2/2., z + m2/2., factor)
+    m3 = dx * dzdx(x + dx/2., y + k2/2., z + m2/2., factor)
+    k4 = dx * dydx(x + dx, y + k3, z + m3, factor)
+    m4 = dx * dzdx(x + dx, y + k3, z + m3, factor)
 
     # summative calculation
     y = y + 1./6.*(k1+2*k2+2*k3+k4)
