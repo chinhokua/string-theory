@@ -14,6 +14,7 @@ z0 = 0     # where z(x0) = z0
 dx = 0.1   # step size
 x_end = 30 # final accepted value for x before calculation terminates
 factor = 1 # THIS IS A/B!!!!!
+asda = 123
 
 # Initial variables, and building the array to place calculated values of every iteration of RK4 of both equations
 x = x0
