@@ -12,8 +12,9 @@ x0 = 0     # initial value of primary independent variable
 y0 = 0     # where y(x0) = y0
 z0 = 0     # where z(x0) = z0
 dx = 0.1   # step size
-x_end = 30 # final accepted value for x before calculation terminates
-factor = 1 # THIS IS A/B!!!!!
+x_end = 10000 # final accepted value for x before calculation terminates
+a = 1      # the value of a 
+b = 1      # the value of b
 
 # Initial variables, and building the array to place calculated values of every iteration of RK4 of both equations
 x = x0
@@ -25,10 +26,10 @@ z_values = [x0]
 
 # derivative functions definition
 def dydx(x, y, z): # dy/dx, where y and z are functions of x
-    return x + math.pow(0.01, y)*y
+    return a * z * (y - 1)
 
 def dzdx(x, y, z): # dz/dx, where y and z are functions of x
-    return 47 - x + (math.pow(0.02, z)*z)
+    return ((a * y * (y - 2))/(b*b))
 
 # main RK4 functiom
 def RungeKuttaCoupled(x, y, z, dx, dydx, dzdx):
@@ -48,6 +49,7 @@ def RungeKuttaCoupled(x, y, z, dx, dydx, dzdx):
     y = y + 1./6.*(k1+2*k2+2*k3+k4)
     z = z + 1./6.*(m1+2*m2+2*m3+m4)
     x = x + dx
+    print(x, y, z, k1, m1, k2, m2, k3, m3, k4, m4)
     return x, y, z # outputted so they can be appended as values to a table (as well as update the x value)
 
 while x <= x_end: # while we haven't reached intended final calculation area (x)
@@ -64,7 +66,7 @@ while x <= x_end: # while we haven't reached intended final calculation area (x)
 plt.autoscale(enable=True, axis='y', tight=None) # forces a y-axis autofit 
 plt.plot(x_values, y_values, 'bo') 
 plt.plot(x_values, z_values,'ro')
-plt.legend(['RK4 dy/dx','dz/dx'])
+plt.legend(['dy/dx','dz/dx'])
 plt.grid(True)
 plt.title("Solution")
 plt.show()
