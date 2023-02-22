@@ -7,14 +7,21 @@ import math
 import tkinter
 from matplotlib.widgets import Slider, Button
 
+# additional metric variables
+mu = 1 
+p = 3
+alpha = 2 / ( 5 - p )
+z_0 = 1 # different from function z0 (ope)
+
 # INITIAL VALUES
 x0 = 0.00001     # initial value of primary independent variable
 y0 = 0    # where y(x0) = y0
 z0 = (x0 / 3)     # where z(x0) = z0 [1/3 for A=B=1, might change otherwise]
 dx = x0   # step size
 x_end = 10  # final accepted value for x before calculation terminates
-a = 1      # the value of a 
-b = 1      # the value of b 
+# a = 1      # the value of a 
+# b2 = 1      # the value of b 
+
 
 # Initial variables, and building the array to place calculated values of every iteration of RK4 of both equations
 x = x0
@@ -24,13 +31,25 @@ x_values = [x0]
 y_values = [y0]
 z_values = [x0] 
 
+#a wit no z
+# a = np.sqrt( mu * np.power(x * x + 1, (p-3)/ (10 - 2*p)) * (x * x + 1 / (alpha * alpha)  ) /(x*x + 1 ) ) 
+
+#a wit z
+a = np.sqrt( mu * np.power(z_0, (p-3) / (10-2*p)  * np.power(x * x + 1, (p-3)/ (10 - 2*p)) * (x * x + 1 / (alpha * alpha)  ) /(x*x + 1 ) ))
+
+#b wit no z
+# b2 = np.power( (x*x + 1) , (p-3) / (10-2*p) ) * 1/(alpha * alpha)
+
+#b wit z
+b2 = np.power(z_0, (p-3) / (10 - 2*p)) * np.power( (x*x + 1) , (p-3) / (10-2*p) ) * 1/(alpha * alpha)
+
 # derivative functions definition
 def dydx(x, y, z): # dy/dx, where y and z are functions of x
-    return a * z * (1-y)
+    return   a * z * (1-y)
     # return x * z
 
 def dzdx(x, y, z): # dz/dx, where y and z are functions of x
-    return ((a * y * (2-y))/(b*b * x * x))
+    return  ((a * y * (2-y))/(b2 * x * x))
     # return x / y
 
 # main RK4 functiom
