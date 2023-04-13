@@ -7,12 +7,14 @@ import math
 import tkinter
 from matplotlib.widgets import Slider, Button
 
+b1 = 1 / 3 ;
+
 # INITIAL VALUES
-x0 = 0.00001     # initial value of primary independent variable
-y0 = 0    # where y(x0) = y0
-z0 = (x0 / 3)     # where z(x0) = z0 [1/3 for A=B=1, might change otherwise]
+x0 = 0.001     # initial value of primary independent variable
+y0 =  x0 * x0 * b1 / 2   # where y(x0) = y0
+z0 = x0 * b1      # where z(x0) = z0 [1/3 for A=B=1, might change otherwise]
 dx = x0   # step size
-x_end = 10  # final accepted value for x before calculation terminates
+x_end = 100  # final accepted value for x before calculation terminates
 a = 1      # the value of a 
 b = 1      # the value of b 
 
@@ -65,9 +67,10 @@ while x <= x_end: # while we haven't reached intended final calculation area (x)
     z_values.append(z)
 
 # Plotting the graphs 
+print(x_values[-1], y_values[-1], z_values[-1])
 plt.autoscale(enable=True, axis='y', tight=None) # forces a y-axis autofit 
-plt.plot(x_values, y_values, 'bo') 
-plt.plot(x_values, z_values,'ro')
+plt.plot(x_values, y_values, 'b') 
+plt.plot(x_values, z_values,'r')
 plt.legend(['dy/dx','dz/dx'])
 plt.grid(True)
 plt.title("Solution")
